@@ -8,9 +8,20 @@ class HomeController extends BaseController {
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-	public function showWelcome()
-	{
-		return View::make('hello');
+	public function getLogin(){
+		Return View::make('login');
+	}
+
+	public function postLogin(){
+		$inputs = Input::all();
+		$email    = $inputs['email'];
+		$password = $inputs['password'];
+
+		if (Auth::attempt(array('email' => $email, 'password' => $password))){
+		    return Redirect::intended('dashboard');
+		} else {
+			return Redirect::to('login');
+		}
 	}
 
 }
